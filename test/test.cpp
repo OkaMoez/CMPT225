@@ -27,7 +27,7 @@ void animate(){
         "testinG"
     };
 
-    for(int i=0; i<21; i++){
+    for(int i=0; i<28; i++){
     cout << "\r" << text[i%7] << flush;
     usleep(250000);
     }
