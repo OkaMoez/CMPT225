@@ -10,9 +10,8 @@ void AnimateTest(); // Show a small ASCII animation in terminal
 
 int main(){
     cout << "Hello World!" << endl;
-
+    cout << "This is a test for SFU CMPT225!" << endl;
     AnimateTest();
-
     return 0;
 }
 
