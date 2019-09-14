@@ -6,17 +6,17 @@ using std::cout;
 using std::string;
 using std::flush;
 
-void animate();
+void AnimateTest(); // Show a small ASCII animation in terminal
 
 int main(){
     cout << "Hello World!" << endl;
 
-    animate();
+    AnimateTest();
 
     return 0;
 }
 
-void animate(){
+void AnimateTest(){
     string text[7] = {
         "Testing",
         "tEsting",
