@@ -117,7 +117,7 @@ class Vector
         --theSize;
     }
 
-    void replaceAll(int current, int new)
+    void replaceAll(int current, int replacer)
     {
         cout << "Stub replaceAll called." << endl;
     }
