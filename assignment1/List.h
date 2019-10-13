@@ -1,6 +1,7 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include <iostream>
 #include <algorithm>
 using namespace std;
 
@@ -277,18 +278,18 @@ class List
 				}
 				return counter;
 		}
-		
+
 		friend ostream & operator << (ostream & out, List & lis)
 		{ // For ease of testing
 			int k = 0;
-			for(iterator itr = begin(); itr != end(); itr++) {
+			for(iterator itr = lis.begin(); itr != lis.end(); itr++) {
 				if (k != 0) {
 					out << ", ";
 					if (k%10 == 0) {
 						out << endl << "          "; 
 					}
 				}
-				out << itr.current->data;
+				out << *itr;
 				k++;
 			}
 			return out;

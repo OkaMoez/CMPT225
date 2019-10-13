@@ -118,7 +118,7 @@ class Vector
 	}
 
 	// Student Made Functions
-	int replaceAll(Object & replacee, Object & replacer) // t = O(n), m = O(n)
+	int replaceAll(const Object & replacee, const Object & replacer) // t = O(n), m = O(n)
 	{ // Loop thorugh vector once, replace and increment on matches
 		int counter = 0;
 		for( int k = 0; k <= theSize; k++) {
@@ -130,7 +130,7 @@ class Vector
 	  return counter;
 	}
 
-	int removeAll (Object & deletee) // t = O(n), m = O((2)n)
+	int removeAll (const Object & deletee) // t = O(n), m = O((2)n)
 	{ // Like resize, make new array-removed and copy back
 		int counter = 0;
 		int newSize = 0;
