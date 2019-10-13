@@ -10,149 +10,184 @@ template <typename Object>
 class Vector
 {
   public:
-    explicit Vector( int initSize = 0 )
-      : theSize{ initSize }, theCapacity{ initSize + SPARE_CAPACITY }
-      { objects = new Object[ theCapacity ]; }
-      
-    Vector( const Vector & rhs )
-      : theSize{ rhs.theSize }, theCapacity{ rhs.theCapacity }, objects{ nullptr }
-    { 
-        objects = new Object[ theCapacity ];
-        for( int k = 0; k < theSize; ++k )
-            objects[ k ] = rhs.objects[ k ];
-    }
-    
-    Vector & operator= ( const Vector & rhs )
-    {
-        Vector copy = rhs;
-        std::swap( *this, copy );
-        return *this;
-    }
-    
-    ~Vector( )
-      { delete [ ] objects; }
+	explicit Vector( int initSize = 0 )
+	  : theSize{ initSize }, theCapacity{ initSize + SPARE_CAPACITY }
+	  { objects = new Object[ theCapacity ]; }
+	  
+	Vector( const Vector & rhs )
+	  : theSize{ rhs.theSize }, theCapacity{ rhs.theCapacity }, objects{ nullptr }
+	{ 
+		objects = new Object[ theCapacity ];
+		for( int k = 0; k < theSize; ++k )
+			objects[ k ] = rhs.objects[ k ];
+	}
+	
+	Vector & operator= ( const Vector & rhs )
+	{
+		Vector copy = rhs;
+		std::swap( *this, copy );
+		return *this;
+	}
+	
+	~Vector( )
+	  { delete [ ] objects; }
 
-    Vector( Vector && rhs )
-      : theSize{ rhs.theSize }, theCapacity{ rhs.theCapacity }, objects{ rhs.objects }
-    {
-        rhs.objects = nullptr;
-        rhs.theSize = 0;
-        rhs.theCapacity = 0;
-    }
+	Vector( Vector && rhs )
+	  : theSize{ rhs.theSize }, theCapacity{ rhs.theCapacity }, objects{ rhs.objects }
+	{
+		rhs.objects = nullptr;
+		rhs.theSize = 0;
+		rhs.theCapacity = 0;
+	}
    
-    Vector & operator= ( Vector && rhs )
-    {    
-        std::swap( theSize, rhs.theSize );
-        std::swap( theCapacity, rhs.theCapacity );
-        std::swap( objects, rhs.objects );
-        
-        return *this;
-    }
-    
-    bool empty( ) const
-      { return size( ) == 0; }
-    int size( ) const
-      { return theSize; }
-    int capacity( ) const
-      { return theCapacity; }
+	Vector & operator= ( Vector && rhs )
+	{    
+		std::swap( theSize, rhs.theSize );
+		std::swap( theCapacity, rhs.theCapacity );
+		std::swap( objects, rhs.objects );
+		
+		return *this;
+	}
+	
+	bool empty( ) const
+	  { return size( ) == 0; }
+	int size( ) const
+	  { return theSize; }
+	int capacity( ) const
+	  { return theCapacity; }
 
-    Object & operator[]( int index )
-    {
-                                                     #ifndef NO_CHECK
-        if( index < 0 || index >= size( ) )
-            throw ArrayIndexOutOfBoundsException{ };
-                                                     #endif
-        return objects[ index ];
-    }
+	Object & operator[]( int index )
+	{
+													 #ifndef NO_CHECK
+		if( index < 0 || index >= size( ) )
+			throw ArrayIndexOutOfBoundsException{ };
+													 #endif
+		return objects[ index ];
+	}
 
-    const Object & operator[]( int index ) const
-    {
-                                                     #ifndef NO_CHECK
-        if( index < 0 || index >= size( ) )
-            throw ArrayIndexOutOfBoundsException{ };
-                                                     #endif
-        return objects[ index ];
-    }
+	const Object & operator[]( int index ) const
+	{
+													 #ifndef NO_CHECK
+		if( index < 0 || index >= size( ) )
+			throw ArrayIndexOutOfBoundsException{ };
+													 #endif
+		return objects[ index ];
+	}
 
-    void resize( int newSize )
-    {
-        if( newSize > theCapacity )
-            reserve( newSize * 2 );
-        theSize = newSize;
-    }
+	void resize( int newSize )
+	{
+		if( newSize > theCapacity )
+			reserve( newSize * 2 );
+		theSize = newSize;
+	}
 
-    void reserve( int newCapacity )
-    {
-        if( newCapacity < theSize )
-            return;
+	void reserve( int newCapacity )
+	{
+		if( newCapacity < theSize )
+			return;
 
-        Object *newArray = new Object[ newCapacity ];
-        for( int k = 0; k < theSize; ++k )
-            newArray[ k ] = std::move( objects[ k ] );
+		Object *newArray = new Object[ newCapacity ];
+		for( int k = 0; k < theSize; ++k )
+			newArray[ k ] = std::move( objects[ k ] );
 
-        theCapacity = newCapacity;
-        std::swap( objects, newArray );
-        delete [ ] newArray;
-    }
+		theCapacity = newCapacity;
+		std::swap( objects, newArray );
+		delete [ ] newArray;
+	}
 
-      // Stacky stuff
-    void push_back( const Object & x )
-    {
-        if( theSize == theCapacity )
-            reserve( 2 * theCapacity + 1 );
-        objects[ theSize++ ] = x;
-    }
-      // Stacky stuff
-    void push_back( Object && x )
-    {
-        if( theSize == theCapacity )
-            reserve( 2 * theCapacity + 1 );
-        objects[ theSize++ ] = std::move( x );
-    }
+	  // Stacky stuff
+	void push_back( const Object & x )
+	{
+		if( theSize == theCapacity )
+			reserve( 2 * theCapacity + 1 );
+		objects[ theSize++ ] = x;
+	}
+	  // Stacky stuff
+	void push_back( Object && x )
+	{
+		if( theSize == theCapacity )
+			reserve( 2 * theCapacity + 1 );
+		objects[ theSize++ ] = std::move( x );
+	}
 
-    void pop_back( )
-    {
-        if( empty( ) )
-            throw UnderflowException{ };
-        --theSize;
-    }
+	void pop_back( )
+	{
+		if( empty( ) )
+			throw UnderflowException{ };
+		--theSize;
+	}
 
-    void replaceAll(int current, int replacer)
-    {
-        cout << "Stub replaceAll called." << endl;
-    }
+	// Student Made Functions
+	int replaceAll(Object & replacee, Object & replacer) // t = O(n), m = O(n)
+	{ // Loop thorugh vector once, replace and increment on matches
+		int counter = 0;
+		for( int k = 0; k <= theSize; k++) {
+			if(objects[ k ] == replacee) {
+				objects [ k ] = replacer;
+				counter++;
+			}
+		}
+	  return counter;
+	}
 
-    void removeAll (int to_delete)
-    {
-        cout << "Stub removeAll called." << endl;
-    }
+	int removeAll (Object & deletee) // t = O(n), m = O((2)n)
+	{ // Like resize, make new array-removed and copy back
+		int counter = 0;
+		int newSize = 0;
+		for( int k = 0; k < theSize; ++k ) {
+			if (objects [ k ] != deletee) {
+				objects [ newSize ] = std::move( objects[ k ] );
+				newSize++;
+			}
+			else {
+				counter++;
+			}
+		}
+		resize(newSize);
+		return counter;
+	}
 
-    const Object & back ( ) const
-    {
-        if( empty( ) )
-            throw UnderflowException{ };
-        return objects[ theSize - 1 ];
-    }
+	friend ostream & operator << (ostream & out, const Vector &vec)
+	{ // For ease of testing
+		for( int k = 0; k < vec.size(); ++k ) {
+			if (k != 0) {
+				out << ", ";
+				if (k%10 == 0) {
+					out << endl << "          "; 
+				}
+			}
+			out << vec [ k ];
+		}
+		return out;
+	}
+	// End of Student Made Functions
 
-      // Iterator stuff: not bounds checked
-    typedef Object * iterator;
-    typedef const Object * const_iterator;
+	const Object & back ( ) const
+	{
+		if( empty( ) )
+			throw UnderflowException{ };
+		return objects[ theSize - 1 ];
+	}
 
-    iterator begin( )
-      { return &objects[ 0 ]; }
-    const_iterator begin( ) const
-      { return &objects[ 0 ]; }
-    iterator end( )
-      { return &objects[ size( ) ]; }
-    const_iterator end( ) const
-      { return &objects[ size( ) ]; }
+	  // Iterator stuff: not bounds checked
+	typedef Object * iterator;
+	typedef const Object * const_iterator;
 
-    static const int SPARE_CAPACITY = 2;
+	iterator begin( )
+	  { return &objects[ 0 ]; }
+	const_iterator begin( ) const
+	  { return &objects[ 0 ]; }
+	iterator end( )
+	  { return &objects[ size( ) ]; }
+	const_iterator end( ) const
+	  { return &objects[ size( ) ]; }
+
+	static const int SPARE_CAPACITY = 2;
 
   private:
-    int theSize;
-    int theCapacity;
-    Object * objects;
+	int theSize;
+	int theCapacity;
+	Object * objects;
 };
 
 #endif
