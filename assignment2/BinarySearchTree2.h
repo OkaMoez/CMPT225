@@ -1,5 +1,5 @@
-#ifndef BINARY_SEARCH_TREE_H
-#define BINARY_SEARCH_TREE_H
+#ifndef BINARY_SEARCH_TREE_2_H
+#define BINARY_SEARCH_TREE_2_H
 
 #include "dsexceptions.h"
 #include <algorithm>
@@ -153,6 +153,16 @@ class BinarySearchTree
     void remove( const Comparable & x )
     {
         remove( x, root );
+    }
+
+    /** 
+     * ~~ STUDENT CODE ~~
+     * Returns number of keys inside specified range. 
+     * ~~ STUDENT CODE ~~
+     */
+    int countInRange( const Comparable & low , const Comparable & high )
+    {
+        return countInRange( low , high , root);
     }
 
 
@@ -329,6 +339,34 @@ class BinarySearchTree
             return nullptr;
         else
             return new BinaryNode{ t->element, clone( t->left ), clone( t->right ) };
+    }
+        
+    /** 
+     * ~~ STUDENT CODE ~~
+     * Internal method to count keys in specified numerical range (low <= k < high) within subtree rooted at t.
+     * ~~ STUDENT CODE ~~
+     */
+    int countInRange( const Comparable & low , const Comparable & high , BinaryNode *t ) const
+    {
+        if( t != nullptr )
+        {
+            int x = 0, y = 0 , z = 0;
+            if ((low <= t->element) and (t->element < high))
+            {
+                x = 1;
+            }
+            // following if statements prevent searching impossible nodes
+            if (low <= t->element)
+            {
+                y = countInRange( low, high, t->left );
+            }
+            if (t->element < high)
+            {
+                z = countInRange( low, high, t->right );
+            }
+            return x + y + z;
+        }
+        return 0;
     }
 };
 

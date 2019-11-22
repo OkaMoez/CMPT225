@@ -1,5 +1,5 @@
 #include <iostream>
-#include "BinarySearchTree.h"
+#include "BinarySearchTree2.h"
 using namespace std;
 
     // Test program
@@ -10,7 +10,7 @@ int main( )
     const int GAP  =   3711;
     int i;
 
-    cout << "Checking... (no more output means success)" << endl;
+    cout << "Error checking..." << endl;
 
     for( i = GAP; i != 0; i = ( i + GAP ) % NUMS )
         t.insert( i );
@@ -46,7 +46,30 @@ int main( )
             cout << "Find error2!" << endl;
     }
 
-    cout << "Finished testing" << endl;
+    cout << "Error check success!" << endl;
+    cout << "countInRange testing..." << endl;
+
+    BinarySearchTree<int> t3;
+    t3.insert( 10 );
+    t3.insert( 5 );
+    t3.insert( 7 );
+    t3.insert( 15 );
+    t3.insert( 12 );
+    t3.insert( 1 );
+    t3.insert( 18 );
+    cout << "# of keys between 5 and 15 in t3 (expect 4): " << t3.countInRange( 5 , 15) << endl;
+    t3.insert( 11 );
+    cout << "# of keys between 5 and 15 in t3 after adding 11: " << t3.countInRange( 5 , 15) << endl;
+    t3.insert( 3 );
+    cout << "# of keys between 5 and 15 in t3 after adding 3: " << t3.countInRange( 5 , 15) << endl;
+    t3.insert( 8 );
+    cout << "# of keys between 5 and 15 in t3 after adding 8: " << t3.countInRange( 5 , 15) << endl;
+    t3.remove( 5 );
+    cout << "# of keys between 5 and 15 in t3 after removing 5: " << t3.countInRange( 5 , 15) << endl;
+    t3.remove( 18 );
+    cout << "# of keys between 5 and 15 in t3 after removing 18: " << t3.countInRange( 5 , 15) << endl;
+
+    cout << "Finished countInRange testing" << endl;
 
     return 0;
 }

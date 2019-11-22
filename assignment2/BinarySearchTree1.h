@@ -1,5 +1,5 @@
-#ifndef BINARY_SEARCH_TREE_H
-#define BINARY_SEARCH_TREE_H
+#ifndef BINARY_SEARCH_TREE_1_H
+#define BINARY_SEARCH_TREE_1_H
 
 #include "dsexceptions.h"
 #include <algorithm>
@@ -21,7 +21,8 @@ using namespace std;
 // ******************ERRORS********************************
 // Throws UnderflowException as warranted
 
-template <typename Comparable>
+// std::enable_if<std::is_arithmetic... prevents compilation for non-arithmetic arguments
+template <typename Comparable, typename = typename std::enable_if<std::is_arithmetic<Comparable>::value, Comparable>::type>
 class BinarySearchTree
 {
   public:
@@ -155,6 +156,15 @@ class BinarySearchTree
         remove( x, root );
     }
 
+    /** 
+     * ~~ STUDENT CODE ~~
+     * Returns sum of all keys in tree. 
+     * ~~ STUDENT CODE ~~
+     */
+    int sum()
+    {
+        return sum(root );
+    }
 
   private:
     struct BinaryNode
@@ -329,6 +339,20 @@ class BinarySearchTree
             return nullptr;
         else
             return new BinaryNode{ t->element, clone( t->left ), clone( t->right ) };
+    }
+        
+    /** 
+     * ~~ STUDENT CODE ~~
+     * Internal method to sum keys in subtree rooted at t.
+     * ~~ STUDENT CODE ~~
+     */
+    int sum(BinaryNode *t) const
+    {
+        if( t != nullptr )
+        {
+            return t->element + sum( t->left) + sum( t->right);
+        }
+        return 0;
     }
 };
 

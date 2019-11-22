@@ -1,5 +1,5 @@
 #include <iostream>
-#include "BinarySearchTree.h"
+#include "BinarySearchTree1.h"
 using namespace std;
 
     // Test program
@@ -7,10 +7,10 @@ int main( )
 {
     BinarySearchTree<int> t;
     int NUMS = 400000;
-    const int GAP  =   3711;
+    const int GAP = 3711;
     int i;
 
-    cout << "Checking... (no more output means success)" << endl;
+    cout << "Error checking..." << endl;
 
     for( i = GAP; i != 0; i = ( i + GAP ) % NUMS )
         t.insert( i );
@@ -46,7 +46,22 @@ int main( )
             cout << "Find error2!" << endl;
     }
 
-    cout << "Finished testing" << endl;
+    cout << "Error check success!" << endl;
+    cout << "Sum testing..." << endl;
+
+    BinarySearchTree<int> t3;
+    t3.insert( 2 );
+    t3.insert( 1 );
+    cout << "Sum of tree t3: " << t3.sum() << endl;
+    t3.insert( 3 );
+    t3.insert( 4 );
+    cout << "Sum of tree t3 after adding 3 + 4: " << t3.sum() << endl;
+    t3.insert( 12 );
+    cout << "Sum of tree t3 after adding 12: " << t3.sum() << endl;
+    t3.remove( 4 );
+    cout << "Sum of tree t3 after removing 4: " << t3.sum() << endl;
+
+    cout << "Finished sum testing" << endl;
 
     return 0;
 }

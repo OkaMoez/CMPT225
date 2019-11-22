@@ -1,32 +1,44 @@
 # assignment 1 makefile
 
 # compile and link
-all: Test Exp
+all: BS1Test BS2Test AVLTest
 
 # run app
-run_test: Test
-	./Test
+run_test1: BS1Test
+	./TestBinarySearchTree1
 
 # run app
-run_exp: Exp
-	./Exp
+run_test2: BS2Test
+	./TestBinarySearchTree2
 
-# link test.o to test executable
-Test: Test.o
-	g++ -g -o Test Test.o
+# run app
+run_test3: AVLTest
+	./TestAVLTree
 
-# compile test.cpp to test.o
-test.o: Test.cpp
-	g++ -g -c Test.cpp
+# link TestBinarySearchTree1.o to TestBinarySearchTree1 executable
+BS1Test: BS1Test.o
+	g++ -g -o TestBinarySearchTree1 TestBinarySearchTree1.o
 
-# link Exp.o to Exp executable
-Exp: Exp.o
-	g++ -g -o Exp Exp.o
+# compile TestBinarySearchTree1.cpp to TestBinarySearchTree1.o
+BS1Test.o: TestBinarySearchTree1.cpp
+	g++ -g -c TestBinarySearchTree1.cpp
 
-# compile Exp.cpp to Exp.o
-Exp.o: Exp.cpp
-	g++ -g -c Exp.cpp
+# link TestBinarySearchTree2.o to TestBinarySearchTree2 executable
+BS2Test: BS2Test.o
+	g++ -g -o TestBinarySearchTree2 TestBinarySearchTree2.o
+
+# compile TestBinarySearchTree2.cpp to TestBinarySearchTree2.o
+BS2Test.o: TestBinarySearchTree2.cpp
+	g++ -g -c TestBinarySearchTree2.cpp
+
+# link TestAVLTree.o to TestAVLTree executable
+AVLTest: AVLTest.o
+	g++ -g -o TestAVLTree TestAVLTree.o
+
+# compile TestBinarySearchTree2.cpp to TestAVLTree.o
+AVLTest.o: TestAVLTree.cpp
+	g++ -g -c TestAVLTree.cpp
 
 # remove built files
 clean:
-	rm -rf Test Test.o Exp Exp.o *~
+	rm -rf TestBinarySearchTree1 TestBinarySearchTree1.o TestBinarySearchTree2 TestBinarySearchTree2.o TestAVLTree TestAVLTree.o *~
