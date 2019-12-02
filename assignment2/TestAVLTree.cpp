@@ -10,7 +10,7 @@ int main( )
     const int GAP  =   37;
     int i;
 
-    cout << "Checking... (no more output means success)" << endl;
+    cout << "Error checking..." << endl;
 
     for( i = GAP; i != 0; i = ( i + GAP ) % NUMS )
         t.insert( i );
@@ -46,6 +46,8 @@ int main( )
             cout << "Find error2!" << endl;
     }
 
-    cout << "End of test..." << endl;
+    cout << "End error checking..." << endl;
+
+    
     return 0;
 }

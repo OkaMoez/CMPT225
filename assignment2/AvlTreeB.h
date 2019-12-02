@@ -165,39 +165,53 @@ class AvlTree
 
 
     /**
+     * ~~ STUDENT EDITED CODE ~~
      * Internal method to insert into a subtree.
      * x is the item to insert.
      * t is the node that roots the subtree.
      * Set the new root of the subtree.
+     * ~~ STUDENT EDITED CODE ~~
      */
-    void insert( const Comparable & x, AvlNode * & t )
+    bool insert( const Comparable & x, AvlNode * & t )
     {
+        bool rebalanced = false;
         if( t == nullptr )
             t = new AvlNode{ x, nullptr, nullptr };
         else if( x < t->element )
-            insert( x, t->left );
+            rebalanced = insert( x, t->left );
         else if( t->element < x )
-            insert( x, t->right );
+            rebalanced = insert( x, t->right );
         
-        balance( t );
+        if(rebalanced != true)
+        {
+            rebalanced = balance( t );
+        }
+        return rebalanced;
     }
 
     /**
+     * ~~ STUDENT EDITED CODE ~~
      * Internal method to insert into a subtree.
      * x is the item to insert.
      * t is the node that roots the subtree.
      * Set the new root of the subtree.
+     * ~~ STUDENT EDITED CODE ~~
      */
-    void insert( Comparable && x, AvlNode * & t )
+    bool insert( Comparable && x, AvlNode * & t )
     {
+        bool rebalanced = false;
         if( t == nullptr )
             t = new AvlNode{ std::move( x ), nullptr, nullptr };
         else if( x < t->element )
-            insert( std::move( x ), t->left );
+            rebalanced = insert( std::move( x ), t->left );
         else if( t->element < x )
-            insert( std::move( x ), t->right );
+            rebalanced = insert( std::move( x ), t->right );
         
-        balance( t );
+        if(rebalanced != true)
+        {
+            rebalanced = balance( t );
+        }
+        return rebalanced;
     }
      
     /**
@@ -232,27 +246,41 @@ class AvlTree
     
     static const int ALLOWED_IMBALANCE = 1;
 
-
-  // Assume t is balanced or within one of being balanced
-    void balance( AvlNode * & t )
+    /**
+     * ~~ STUDENT EDITED CODE ~~
+     * Assume t is balanced or within one of being balanced
+     * ~~ STUDENT EDITED CODE ~~
+     */
+    bool balance( AvlNode * & t )
     {
-        if( t == nullptr ) return;
+        bool rebalanced = false;
+        if( t == nullptr ) return rebalanced;
 
         cout << "balancing <" << height(t->left) << "> " << t->element << " <" << height(t->right) << ">" << endl ;
 
         if( height( t->left ) - height( t->right ) > ALLOWED_IMBALANCE )
+        {
             if( height( t->left->left ) >= height( t->left->right ) )
                 rotateWithLeftChild( t );
             else
-                doubleWithLeftChild( t );
+            {
+                doubleWithLeftChild( t ); 
+            }
+            rebalanced = true;
+        }
         else
         if( height( t->right ) - height( t->left ) > ALLOWED_IMBALANCE )
+        {
             if( height( t->right->right ) >= height( t->right->left ) )
                 rotateWithRightChild( t );
             else
+            {
                 doubleWithRightChild( t );
-
+            }
+            rebalanced = true;
+        }
         t->height = max( height( t->left ), height( t->right ) ) + 1;
+        return rebalanced;
     }
     
     

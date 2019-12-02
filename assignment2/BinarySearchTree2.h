@@ -13,6 +13,7 @@ using namespace std;
 // void insert( x )       --> Insert x
 // void remove( x )       --> Remove x
 // bool contains( x )     --> Return true if x is present
+// int countInRange( x,y )--> Returns # of keys in range
 // Comparable findMin( )  --> Return smallest item
 // Comparable findMax( )  --> Return largest item
 // boolean isEmpty( )     --> Return true if empty; else false
