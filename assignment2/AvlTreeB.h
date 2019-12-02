@@ -145,6 +145,20 @@ class AvlTree
     {
         remove( x, root );
     }
+ 
+    /**
+     * Remove x from the tree. Nothing is done if x is not found.
+     */
+    void isBalanced( )
+    {
+        if(height( root->left ) - height( root->right ) <= 1)
+        {
+            cout << "is balanced at root\n";
+        }
+        else
+            cout << "is not balanced at root - bf: " 
+                << (height( root->left ) - height( root->right )) << endl;
+    }
 
   private:
     struct AvlNode
@@ -215,24 +229,27 @@ class AvlTree
     }
      
     /**
+     * ~~ STUDENT EDITED CODE ~~
      * Internal method to remove from a subtree.
      * x is the item to remove.
      * t is the node that roots the subtree.
      * Set the new root of the subtree.
+     * ~~ STUDENT EDITED CODE ~~
      */
-    void remove( const Comparable & x, AvlNode * & t )
+    bool remove( const Comparable & x, AvlNode * & t )
     {
+        bool rebalanced = false;
         if( t == nullptr )
-            return;   // Item not found; do nothing
+            return rebalanced;   // Item not found; do nothing
         
         if( x < t->element )
-            remove( x, t->left );
+            rebalanced = remove( x, t->left );
         else if( t->element < x )
-            remove( x, t->right );
+            rebalanced = remove( x, t->right );
         else if( t->left != nullptr && t->right != nullptr ) // Two children
         {
             t->element = findMin( t->right )->element;
-            remove( t->element, t->right );
+            rebalanced = remove( t->element, t->right );
         }
         else
         {
@@ -241,7 +258,11 @@ class AvlTree
             delete oldNode;
         }
         
-        balance( t );
+        if(rebalanced != true)
+        {
+            rebalanced = balance( t );
+        }
+        return rebalanced;
     }
     
     static const int ALLOWED_IMBALANCE = 1;
@@ -256,7 +277,7 @@ class AvlTree
         bool rebalanced = false;
         if( t == nullptr ) return rebalanced;
 
-        cout << "balancing <" << height(t->left) << "> " << t->element << " <" << height(t->right) << ">" << endl ;
+        cout << "Balancing <" << height(t->left) << "> " << t->element << " <" << height(t->right) << "> - ";
 
         if( height( t->left ) - height( t->right ) > ALLOWED_IMBALANCE )
         {
@@ -267,6 +288,7 @@ class AvlTree
                 doubleWithLeftChild( t ); 
             }
             rebalanced = true;
+            cout << "Left Side Fix" << endl;
         }
         else
         if( height( t->right ) - height( t->left ) > ALLOWED_IMBALANCE )
@@ -278,6 +300,11 @@ class AvlTree
                 doubleWithRightChild( t );
             }
             rebalanced = true;
+            cout << "Right Side Fix" << endl;
+        }
+        else
+        {
+            cout << "No Fix" << endl;
         }
         t->height = max( height( t->left ), height( t->right ) ) + 1;
         return rebalanced;
